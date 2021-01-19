@@ -32,7 +32,7 @@ bool ActionReorderCourses::Execute() {
 				SEMESTER SEM = pS->Sem(xpoint);
 				Course_Code code = PointerOnCourse->getCode();
 				int crd = PointerOnCourse->getCredits();
-				string Title = "Test 101";
+				string Title = PointerOnCourse->getTitle();
 				//int crd = 0;
 				pS->DeleteCourse(x_point, y_point, yearcourse, sems);
 				graphicsInfo gInfo{ xpoint, xpoint };

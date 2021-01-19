@@ -29,27 +29,15 @@ void StudyPlan::DrawMe(GUI* pGUI) const
 }
 //delete course
 bool StudyPlan::DeleteCourse(int x_point,int y_point, int years, SEMESTER SEMs) {
-	//int* point = nullptr;
-	//for (int i = 0; i <= 4; i++) {
-		return plan[years-1]->actiondeletecourse(x_point, y_point, SEMs);  //plan is list of academic years,
-		/*if (point != nullptr) {
-			return true;
-			break;
-		}*/
-	//}
-	return true;
+	
+	return plan[years-1]->actiondeletecourse(x_point, y_point, SEMs);  //plan is list of academic years,
 }
 
 Course* StudyPlan::DetectCourse(int x_point, int y_point, int year, SEMESTER sem) {
 	Course* pointPointer = nullptr;
 	pointPointer = plan[year-1]->DetectPositionOfCourse(x_point, y_point, sem);
-	if (pointPointer != nullptr) {
-		return pointPointer;
-	}
-	else
-	{
-		return pointPointer;
-	}
+	
+	return pointPointer;
 	
 }
 //check if the courses in the minor vector is found in the study plan or not (year courses)
@@ -63,7 +51,6 @@ Course* StudyPlan::DetectCourse(int x_point, int y_point, int year, SEMESTER sem
 Course* StudyPlan::CheckMaxMini(int x, int y, int year, SEMESTER sem) {
 	Course* pointerc= nullptr;
 	pointerc = plan[year - 1]->CheckCreditsMaxMin(x, y, sem);
-
 	return pointerc;
 }
 //bool StudyPlan::FillDoneCoursesFun(Course_Code code) {

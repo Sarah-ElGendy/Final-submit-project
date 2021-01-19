@@ -26,7 +26,7 @@ Registrar::Registrar()
 	pGUI = new GUI;	//create interface object
 	pSPlan = new StudyPlan;	//create a study plan.
 	load(); //calling course catalog
-	//ImportRequirements();
+	ImportRequirements();  //calling imort req
 }
 
 //returns a pointer to GUI
@@ -228,6 +228,7 @@ CourseInfo* Registrar::getcourseinfo(Course_Code code) {
 		if (RegRules.CourseCatalog[i].Code == code) {
 			c += 1;
 			num = i;
+			break;
 		}
 		if (RegRules.CourseCatalog[i].Code != code) {
 			c += 0;
@@ -240,7 +241,7 @@ CourseInfo* Registrar::getcourseinfo(Course_Code code) {
 		return nullptr;
 	}
 }
-int Registrar::SelectCourseStatus( int cred)
+int Registrar::SelectCourseStatus(int cred)
 {
 	int static LevelCred=0;
 	LevelCred += cred;
@@ -253,8 +254,8 @@ int Registrar::SelectCourseStatus( int cred)
 void Registrar::ImportRequirements()
 {
 	fstream file;
-	file.open("FILES\\course_Requirments.txt", ios::in);
-	Rules Rule;
+	file.open("FILES\\NANENG-Requirements.txt", ios::in);
+
 	string data;
 	string temptotalcr;
 	string tempUniComCr;
@@ -263,24 +264,24 @@ void Registrar::ImportRequirements()
 	// first requrement
 
 	getline(file, temptotalcr);
-	Rule.totalcr = stoi(temptotalcr);
+	RegRules.totalcr = stoi(temptotalcr);
 
 	// 2 requirement
 
-	while (getline(file, data))
-	{
-		stringstream sss(data);
-		getline(sss, tempUniComCr, ',');
-		Rule.UniComCr = stoi(tempUniComCr);
-		getline(sss, tempUniElecCr);
-		Rule.UniElecCr = stoi(tempUniElecCr);
-	}
+	getline(file, data);
+
+	stringstream sss(data);
+	getline(sss, tempUniComCr, ',');
+	RegRules.UniComCr = stoi(tempUniComCr);
+	getline(sss, tempUniElecCr);
+	RegRules.UniElecCr = stoi(tempUniElecCr);
+
 
 	// 3 requirement
 
 	string tempTrackCr;
 	getline(file, tempTrackCr);
-	Rule.TrackComCr = stoi(tempTrackCr);
+	RegRules.TrackComCr = stoi(tempTrackCr);
 
 	// 4 requirement
 
@@ -289,22 +290,21 @@ void Registrar::ImportRequirements()
 
 
 
-	while (getline(file, data))
-	{
-		stringstream ssss(data);
-		getline(ssss, tempMajorComCr, ',');
-		Rule.MajorComCr = stoi(tempMajorComCr);
-		getline(ssss, tempMajorElecCr);
-		Rule.MajorEleCr = stoi(tempMajorElecCr);
-	}
+	getline(file, data);
+	stringstream ssss(data);
+	getline(ssss, tempMajorComCr, ',');
+	RegRules.MajorComCr = stoi(tempMajorComCr);
+	getline(ssss, tempMajorElecCr);
+	RegRules.MajorEleCr = stoi(tempMajorElecCr);
+	//cout << Rule.MajorComCr << endl;
 
-	// 5 requirement
+
+// 5 requirement
 
 	string tempNumOfCon;
 	getline(file, tempNumOfCon);
-	Rule.NumOfCon = stoi(tempNumOfCon);
+	RegRules.NumOfCon = stoi(tempNumOfCon);
 
-	int placesofNumOfCon = 2 * stoi(tempNumOfCon);
 
 	string tempMajorConcen1ComCr;
 	string tempMajorConcen1ElecCr;
@@ -314,46 +314,54 @@ void Registrar::ImportRequirements()
 	string tempMajorConcen3ElecCr;
 
 	// 6 requirement
-
-	for (int i = 0; i < placesofNumOfCon; i++)
+	getline(file, data);
+	if (stoi(tempNumOfCon) != 0)
 	{
 
-		while (getline(file, data))
-		{
-			stringstream nn(data);
-			getline(nn, tempMajorConcen1ComCr, ',');
-			Rule.MajorConcen1ComCr = stoi(tempMajorConcen1ComCr);
-			getline(nn, tempMajorConcen1ElecCr, ',');
-			Rule.MajorConcen1ElecCr = stoi(tempMajorConcen1ElecCr);
+		stringstream nn(data);
+		getline(nn, tempMajorConcen1ComCr, ',');
+		RegRules.MajorConcen1ComCr = stoi(tempMajorConcen1ComCr);
+		getline(nn, tempMajorConcen1ElecCr, ',');
+		RegRules.MajorConcen1ElecCr = stoi(tempMajorConcen1ElecCr);
 
-		}
+		getline(nn, tempMajorConcen2ComCr, ',');
+		RegRules.MajorConcen2ComCr = stoi(tempMajorConcen2ComCr);
+		getline(nn, tempMajorConcen2ElecCr, ',');
+		RegRules.MajorConcen2ElecCr = stoi(tempMajorConcen2ElecCr);
 
-
+		getline(nn, tempMajorConcen3ComCr, ',');
+		RegRules.MajorConcen3ComCr = stoi(tempMajorConcen3ComCr);
+		getline(nn, tempMajorConcen3ElecCr, ',');
+		RegRules.MajorConcen3ElecCr = stoi(tempMajorConcen3ElecCr);
 
 	}
+
+
+
+
 	// 7  and 8 requirement
 
 	string UniversityCompulsory;
 	string UniversityElective;
 
-
-	while (getline(file, data))
+	getline(file, data);
+	stringstream n(data);
+	while (getline(n, UniversityCompulsory, ','))
 	{
 
-		stringstream n(data);
-		getline(n, UniversityCompulsory, ',');
-		Rule.UnivCompulsory.push_back(UniversityCompulsory);
-
-
+		RegRules.UnivCompulsory.push_back(UniversityCompulsory);
 
 	}
 
 
-	while (getline(file, data))
+
+	getline(file, data);
+	stringstream q(data);
+	while (getline(q, UniversityElective, ','))
 	{
-		stringstream q(data);
-		getline(q, UniversityElective, ',');
-		Rule.UnivElective.push_back(UniversityElective);
+
+
+		RegRules.UnivElective.push_back(UniversityElective);
 
 	}
 
@@ -362,20 +370,23 @@ void Registrar::ImportRequirements()
 	string TrackCompulsoryCourses;
 	string TrackElectiveCourses;
 
-	while (getline(file, data))
+	getline(file, data);
+	stringstream qq(data);
+	while (getline(qq, TrackCompulsoryCourses, ','))
 	{
-		stringstream qq(data);
-		getline(qq, TrackCompulsoryCourses, ',');
-		Rule.TrackCompulsory.push_back(TrackCompulsoryCourses);
+
+		RegRules.TrackCompulsory.push_back(TrackCompulsoryCourses);
 
 	}
 
+	getline(file, data);
+	stringstream qqq(data);
 
-	while (getline(file, data))
+	while (getline(qqq, TrackElectiveCourses, ','))
 	{
-		stringstream qqq(data);
-		getline(qqq, TrackElectiveCourses, ',');
-		Rule.TrackElective.push_back(TrackElectiveCourses);
+
+
+		RegRules.TrackElective.push_back(TrackElectiveCourses);
 
 	}
 
@@ -384,21 +395,25 @@ void Registrar::ImportRequirements()
 	string MajorCompulsoryCourses;
 	string MajorElectiveCourses;
 
+	getline(file, data);
+	stringstream r(data);
 
-
-	while (getline(file, data))
+	while (getline(r, MajorCompulsoryCourses, ','))
 	{
-		stringstream r(data);
-		getline(r, MajorCompulsoryCourses, ',');
-		Rule.MajorCompulsory.push_back(MajorCompulsoryCourses);
+
+
+		RegRules.MajorCompulsory.push_back(MajorCompulsoryCourses);
 
 	}
 
-	while (getline(file, data))
+	getline(file, data);
+	stringstream rr(data);
+
+	while (getline(rr, MajorElectiveCourses, ','))
 	{
-		stringstream rr(data);
-		getline(rr, MajorElectiveCourses, ',');
-		Rule.MajorElective.push_back(MajorElectiveCourses);
+
+
+		RegRules.MajorElective.push_back(MajorElectiveCourses);
 	}
 
 	// 12 and 13 requirement
@@ -409,28 +424,31 @@ void Registrar::ImportRequirements()
 
 
 
-	for (int j = 0; j < placesofNumOfCon; j++)
+	for (int j = 0; j < stoi(tempNumOfCon); j++)
 	{
-
-		while (getline(file, data))
+		getline(file, data);
+		stringstream ff(data);
+		while (getline(ff, MajorConcentrationCompulsoryCourses, ','))
 		{
-			stringstream ff(data);
-			getline(ff, MajorConcentrationCompulsoryCourses, ',');
-			Rule.MajorConcentrationCompulsory.push_back(MajorConcentrationCompulsoryCourses);
+
+
+			RegRules.MajorConcentrationCompulsory.push_back(MajorConcentrationCompulsoryCourses);
 
 		}
-
-		while (getline(file, data))
+		getline(file, data);
+		stringstream f(data);
+		while (getline(f, MajorConcentrationElectiveCourses, ','))
 		{
-			stringstream f(data);
-			getline(f, MajorConcentrationElectiveCourses, ',');
-			Rule.MajorConcentrationElective.push_back(MajorConcentrationElectiveCourses);
+
+
+			RegRules.MajorConcentrationElective.push_back(MajorConcentrationElectiveCourses);
 
 		}
 
 
 
 	}
+
 
 
 }
@@ -477,8 +495,8 @@ Course_Code* Registrar::checkcore(Course_Code code, SEMESTER sem, int year) {
 				return &RegRules.CourseCatalog[i].Code;
 			}
 			for (int n = 0; n < RegRules.CourseCatalog[i].CoReqList.size(); n++) {
-				code = RegRules.CourseCatalog[i].CoReqList[n];
-				return pSPlan->coreqyear(code, sem, year);
+				Course_Code CODE = RegRules.CourseCatalog[i].CoReqList[n];
+				return pSPlan->coreqyear(CODE, sem, year);
 
 			}
 		}

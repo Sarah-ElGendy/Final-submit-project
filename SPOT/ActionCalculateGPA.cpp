@@ -24,7 +24,6 @@ bool ActionCalculateGPA::Execute() {
 			SEMESTER SEM = pS->Sem(x_point);
 			Course* PointerOnCourse = pS->DetectCourse(x_point, y_point, yearof_course, SEM);  //detect position of the course selected
 			//calc GPA 
-			
 			if (PointerOnCourse != nullptr) {
 				int creditsOFcourse = PointerOnCourse->getCredits();
 				pGUI->PrintMsg("Enter Grade of the course: ");

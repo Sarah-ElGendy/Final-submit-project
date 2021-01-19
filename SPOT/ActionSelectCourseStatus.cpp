@@ -14,10 +14,8 @@ ActionSelectCourseStatus::ActionSelectCourseStatus(Registrar* p) :Action(p) {
 
 bool ActionSelectCourseStatus::Execute() {
 	GUI* pGUI = pReg->getGUI();
-	int static LevelCred = 0;
 	ActionData actData = pGUI->GetUserAction("press on the course you want to select its status: ");
-	int x, y; 
-	
+	int x, y;
 	if (actData.actType == DRAW_AREA)	//user clicked inside drawing area
 	{
 		//get coord where user clicked
@@ -27,25 +25,48 @@ bool ActionSelectCourseStatus::Execute() {
 		int yearof_course = pS->setYearSem(x);
 		SEMESTER SEM = pS->Sem(x);
 		Course* PointerCourse = pS->DetectCourse(x, y, yearof_course, SEM);  //detect position of the course selected
-		
+		if (PointerCourse != nullptr) {
+			ActionData actData = pGUI->GetUserAction("select course statues: Done, in progress ,pending: ");
+			string selection = pGUI->GetSrting();
+			int CredC = PointerCourse->getCredits();
+			if (selection == "Done" || selection == "done" || selection == "DONE") {
+				int Funselection = pReg->SelectCourseStatus(CredC);
+				Course_Code CODE = PointerCourse->getCode();
+				pReg->FillDoneCoursesFun(CODE);
+				pGUI->PrintMsg("The course has selected as done sucssesfully ..press enter to continue");
+				Course_Code selectSucss = pGUI->GetSrting();
+			}
+			else if (selection == "pending" ) {
+			
+				pGUI->PrintMsg("The course has selected as pending sucssesfully ..press enter to continue");
+				Course_Code selectSucss = pGUI->GetSrting();
+				
+			}
+			else if (selection == "in progress") {
+				
+				pGUI->PrintMsg("The course has selected as in progress sucssesfully ..press enter to continue");
+				Course_Code selectSucss = pGUI->GetSrting();
+				
+			}
+			else {
+				
+				pGUI->PrintMsg("invalid input ..press enter to continue");
+				Course_Code selectSucss = pGUI->GetSrting();
+				
+			}
 
-		ActionData actData = pGUI->GetUserAction("select course statues: Done, in progress ,pending: ");
-		string selection =pGUI ->GetSrting();
-		int CredC = PointerCourse->getCredits();
-		if (selection == "Done" || selection == "done" || selection == "DONE") {
-			int Funselection = pReg->SelectCourseStatus(CredC);
-            Course_Code CODE = PointerCourse->getCode();
-			pReg->FillDoneCoursesFun(CODE);
+			
+			return true;
 		}
 		else {
-			int Funselection = pReg->SelectCourseStatus(0);
+			pGUI->PrintMsg("empty area ..press enter to continue");
+			Course_Code selectSucss = pGUI->GetSrting();
+			return false;
 		}
 		
-		pGUI->PrintMsg("The course has selected sucssesfully ..press enter to continue");
-		Course_Code selectSucss = pGUI->GetSrting();
-		
 	}
-	return true;
+	
+		
 }
 
 ActionSelectCourseStatus::~ActionSelectCourseStatus() {

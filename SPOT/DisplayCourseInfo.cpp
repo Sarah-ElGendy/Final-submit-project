@@ -13,9 +13,6 @@ bool DisplayCourseInfo::Execute() {
 		//get coord where user clicked
 		x_point = actData.x;
 		y_point = actData.y;
-		//graphicsInfo gInfo{ x_point, y_point };
-		//sem semesters = pGUI->getYEARandSEM(x_point, y_point);
-		/*sem semesters;*/
 		StudyPlan* pS = pReg->getStudyPlay();
 		int yearof_course = pS->setYearSem(x_point);
 		SEMESTER SEM = pS->Sem(x_point);
@@ -28,7 +25,7 @@ bool DisplayCourseInfo::Execute() {
 			ConvertToString >> NEWcredits;
 			Course_Code course = PointerOnFirstCourse->getCode();
 			string title = PointerOnFirstCourse->getTitle();
-			pGUI->PrintMsg("code: " + course + "  title: " + title + "  press enter to see the credits"+ " Credits: " + NEWcredits+"Press enter to continue...");
+			pGUI->PrintMsg("code: " + course + "  title: " + title + " Credits: " + NEWcredits+"  Press enter to continue...");
 			Course_Code code = pGUI->GetSrting();
 		}
 		else {

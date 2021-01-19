@@ -42,14 +42,10 @@ bool ActionAddCourse::Execute()
 			graphicsInfo gInfo{ x, y };
 
 
-			string Title = "Test101";
+			string Title = cinfo->Title;
 			int crd = cinfo->Credits;
-			//int crd = 0;
 			Course* pC = new Course(code, Title, crd);
 			pC->setGfxInfo(gInfo);
-
-
-			//sem syearsem; // struct include the year and the semesters
 			StudyPlan* pS = pReg->getStudyPlay();
 			int yearof_course = pS->setYearSem(x);
 			SEMESTER SEM = pS->Sem(x);
@@ -58,7 +54,7 @@ bool ActionAddCourse::Execute()
 			//Course* poPreq = pReg->getStudyPlay()->CheckPreq(x, y, yearof_course, SEM);
 			ChangeColor CB;
 			if (poC != nullptr) {
-				ActionData actData = pGUI->GetUserAction("error..moderate ");
+				ActionData actData = pGUI->GetUserAction("error..moderate issue ");
 				CB = ChangeColorModerate;
 			}
 			Course_Code* poPreq = pReg->CheckDone(code);

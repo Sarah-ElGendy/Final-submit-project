@@ -1,6 +1,7 @@
 #include "GUI.h"
 #include "../Courses/Course.h"
 #include "../StudyPlan/AcademicYear.h"
+#include "../Rules.h"
 #include <sstream>
 
 GUI::GUI()
@@ -96,14 +97,14 @@ void GUI::DrawCourse(const Course* pCrs)
 	else
 	pWind->SetPen(DrawColor, 2);
 	pWind->SetBrush(FillColor);
-	
-	/*if (pCOURSE->getType() == "UniversityCoumpulsory" || pCOURSE->getType() == "UniversityElective") {
+
+	/*if (pCOURSE->getType() == "UnivCompulsory" || pCOURSE->getType() == "UnivElective") {
 		pWind->SetPen(YELLOW, 2);
 	}
-	else if (pCOURSE->getType() == "MajorCoumpulsory" || pCOURSE->getType() == "MajorElective") {
+	else if (pCOURSE->getType() == "MajorCompulsory" || pCOURSE->getType() == "MajorElective") {
 		pWind->SetPen(BLUE, 2);
 	}
-	else if (pCOURSE->getType() == "TrackCoumpulsory" || pCOURSE->getType() == "TrackElective") {
+	else if (pCOURSE->getType() == "TrackCompulsory" || pCOURSE->getType() == "TrackElective") {
 		pWind->SetPen(PINK, 2);
 	}*/
 	graphicsInfo gInfo = pCrs->getGfxInfo();

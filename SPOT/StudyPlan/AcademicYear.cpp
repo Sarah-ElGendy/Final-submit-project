@@ -60,14 +60,14 @@ bool AcademicYear::actiondeletecourse(int x_point, int y_point, SEMESTER SEMs) {
 				}
 				
 		}
-		return true;
+		return false;
 }
 //detect course position
 Course* AcademicYear::DetectPositionOfCourse(int x_point, int y_point, SEMESTER sem) {
 	for (iter = YearCourses[sem].begin(); iter != YearCourses[sem].end(); iter++) {
 		Course* coursepointer = *iter;
 		graphicsInfo pos = coursepointer->getGfxInfo();   //function that detect the position of the rectangle course
-		if (x_point > pos.x && x_point<pos.x + 80 && y_point > pos.y && y_point < pos.y + 40) {
+		if (x_point > pos.x && x_point<pos.x + 90 && y_point > pos.y && y_point < pos.y + 40) {
 			return coursepointer;
 		}
 
@@ -123,7 +123,7 @@ Course* AcademicYear::CheckCreditsMaxMin(int x, int y, SEMESTER sem) {
 	//int static semestercredits = 0;
 	for (it = YearCourses[sem].begin(); it != YearCourses[sem].end(); it++) {
 		Course* po = *it;
-		graphicsInfo positionOfCourse = po->getGfxInfo();
+		graphicsInfo positionOfCourse = po->getGfxInfo();  //get x, y of course rectangle
 		if (x > 0 && x < 90) { //sem
 			int static Semester1 = 0;
 			Semester1 += po->getCredits();
