@@ -1,5 +1,0 @@
-﻿  ActionCalculateGPA.cpp
-  ActionSelectCourseStatus.cpp
-  Generating Code...
-C:\Users\user\OneDrive - Zewail City of Science and Technology\Desktop\Final-submit-project\SPOT\ActionSelectCourseStatus.cpp(70): warning C4715: 'ActionSelectCourseStatus::Execute': not all control paths return a value
-  SPOT.vcxproj -> C:\Users\user\OneDrive - Zewail City of Science and Technology\Desktop\Final-submit-project\x64\Debug\SPOT.exe
